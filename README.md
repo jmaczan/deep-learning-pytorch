@@ -15,6 +15,30 @@ A collection of deep learning models implemented in PyTorch and PyTorch Lightnin
 
 Hopefully each of them will get a dedicated blog post on my humble tech blog [maczan.pl](https://maczan.pl)
 
+- [x] LeNet
+- [ ] AlexNet
+- [ ] VGG
+- [ ] ResNet
+- [ ] Inception
+- [ ] DenseNet
+- [ ] RNN
+- [ ] LSTM
+- [ ] GRU (Gated Recurrent Units)
+- [ ] Transformer
+- [ ] GPT (maybe Karpathy's resources on this topic?)
+- [ ] GAN
+- [ ] VAE (Variational autoencoder)
+- [ ] U-Net
+- [ ] Siamese Network
+- [ ] BERT
+- [ ] Self-attention
+- [ ] Sequence-to-Sequence
+- [ ] DQN
+- [ ] A3C
+- [ ] Neural ODEs (ordinary differential equations)
+- [ ] GNN (Graph Neural Network)
+- [ ] EfficientNet
+
 ## Installation
 
 #### Pip

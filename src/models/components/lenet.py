@@ -9,18 +9,18 @@ class LeNet(nn.Module):
     def __init__(self, classes=10):
         super().__init__()
 
-        self.conv1 = nn.Conv2d(in_channels=3, out_channels=6, kernel_size=(5, 5))
+        self.conv1 = nn.Conv2d(in_channels=1, out_channels=20, kernel_size=(5, 5))
         self.relu1 = nn.ReLU()
         self.maxpool1 = nn.MaxPool2d(kernel_size=(2, 2), stride=(2, 2))
 
-        self.conv2 = nn.Conv2d(in_channels=6, out_channels=16, kernel_size=(5, 5))
+        self.conv2 = nn.Conv2d(in_channels=20, out_channels=50, kernel_size=(5, 5))
         self.relu2 = nn.ReLU()
         self.maxpool2 = nn.MaxPool2d(kernel_size=(2, 2), stride=(2, 2))
 
-        self.fc1 = nn.Linear(in_features=6 * 16 * 5, out_features=120)
+        self.fc1 = nn.Linear(in_features=800, out_features=500)
         self.relu3 = nn.ReLU()
 
-        self.fc2 = nn.Linear(in_features=120, out_features=classes)
+        self.fc2 = nn.Linear(in_features=500, out_features=classes)
         self.softmax = nn.LogSoftmax(dim=1)
 
     def forward(self, x):
