@@ -1,10 +1,9 @@
 import torch
-from torch import nn
-from torch import flatten
+from torch import flatten, nn
 
 
 class LeNet(nn.Module):
-    """(CONV => RELU => POOL) * 2 => FC => RELU => FC => SOFTMAX"""
+    """(CONV => RELU => POOL) * 2 => FC => RELU => FC => SOFTMAX."""
 
     def __init__(self, classes=10):
         super().__init__()
