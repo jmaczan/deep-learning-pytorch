@@ -15,8 +15,8 @@ A collection of deep learning models implemented in PyTorch and PyTorch Lightnin
 
 Hopefully each of them will get a dedicated blog post on my humble tech blog [maczan.pl](https://maczan.pl)
 
-- [x] LeNet
-- [ ] AlexNet
+- [x] [LeNet](http://vision.stanford.edu/cs598_spring07/papers/Lecun98.pdf)
+- [ ] [AlexNet](https://proceedings.neurips.cc/paper_files/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf) 📝 in progress 📚
 - [ ] VGG
 - [ ] ResNet
 - [ ] Inception
