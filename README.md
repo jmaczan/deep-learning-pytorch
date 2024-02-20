@@ -11,7 +11,7 @@
 
 ## Description
 
-A collection of deep learning models implemented in PyTorch and PyTorch Lightning for educational purposes
+[A collection of deep learning models implemented in PyTorch and PyTorch Lightning for educational purposes](src/models/components)
 
 Hopefully each of them will get a dedicated blog post on my humble tech blog [maczan.pl](https://maczan.pl)
 
