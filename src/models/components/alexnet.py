@@ -11,26 +11,37 @@ class AlexNet(nn.Module):
         super().__init__()
 
         self.model = nn.Sequential(
-            nn.Conv2d(in_channels=224, out_channels=55, kernel_size=(11, 11), stride=4),
+            # 1st conv layer
+            nn.Conv2d(
+                in_channels=3,
+                out_channels=96,
+                kernel_size=(11, 11),
+                stride=4,
+                padding=0,
+            ),
             nn.ReLU(),
-            nn.MaxPool2d(kernel_size=(5, 5)),
-            #
-            nn.Conv2d(in_channels=55, out_channels=27, kernel_size=(5, 5)),
+            nn.MaxPool2d(kernel_size=(3, 3), stride=2),
+            # 2nd conv layer
+            nn.Conv2d(in_channels=96, out_channels=256, kernel_size=(5, 5), padding=2),
             nn.ReLU(),
-            nn.MaxPool2d(kernel_size=(3, 3)),
-            #
-            nn.Conv2d(in_channels=55, out_channels=27, kernel_size=(5, 5)),
+            nn.MaxPool2d(kernel_size=(3, 3), stride=2),
+            # 3rd conv layer
+            nn.Conv2d(in_channels=256, out_channels=384, kernel_size=(3, 3)),
             nn.ReLU(),
-            nn.MaxPool2d(kernel_size=(3, 3)),
-            #
-            nn.Conv2d(in_channels=55, out_channels=27, kernel_size=(5, 5)),
+            # 4th conv layer
+            nn.Conv2d(in_channels=384, out_channels=256, kernel_size=(3, 3)),
             nn.ReLU(),
-            nn.MaxPool2d(kernel_size=(3, 3)),
-            #
-            nn.Conv2d(in_channels=55, out_channels=27, kernel_size=(5, 5)),
+            # 5th conv layer
+            nn.Conv2d(in_channels=256, out_channels=256, kernel_size=(3, 3)),
             nn.ReLU(),
-            nn.MaxPool2d(kernel_size=(3, 3)),
-            #
+            # 1st fc layer with dropout
+            nn.Linear(in_features=256, out_features=4096),
+            nn.Dropout(p=0.5),
             nn.ReLU(),
-            nn.Linear(in_features=128, out_features=192),
+            # 2nd fc layer with dropout
+            nn.Linear(in_features=4096, out_features=2048),
+            nn.Dropout(p=0.5),
+            nn.ReLU(),
+            # 3rd fc layer
+            nn.Linear(in_features=2048, out_features=1000),
         )
