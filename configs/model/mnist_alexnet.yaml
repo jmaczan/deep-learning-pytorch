@@ -14,9 +14,8 @@ scheduler:
   patience: 10
 
 net:
-  _target_: src.models.components.alexnet.AlexNet
+  _target_: src.models.components.alexnet_for_mnist.AlexNetForMNIST
   channels: 1
-  first_fc_in_features: 1024
 
 # compile model for faster training with pytorch 2.0
 compile: false
