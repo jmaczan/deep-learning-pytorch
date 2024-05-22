@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🌻 Deep Learning models implemented in PyTorch
+# 🌸 Deep Learning models implemented in PyTorch
 
 <a href="https://pytorch.org/get-started/locally/"><img alt="PyTorch" src="https://img.shields.io/badge/PyTorch-ee4c2c?logo=pytorch&logoColor=white"></a>
 <a href="https://pytorchlightning.ai/"><img alt="Lightning" src="https://img.shields.io/badge/-Lightning-792ee5?logo=pytorchlightning&logoColor=white"></a>
@@ -13,26 +13,24 @@
 
 [A collection of deep learning models implemented in PyTorch and PyTorch Lightning for educational purposes](src/models/components)
 
-Hopefully each of them will get a dedicated blog post on my humble tech blog [maczan.pl](https://maczan.pl)
-
 - [x] [LeNet](http://vision.stanford.edu/cs598_spring07/papers/Lecun98.pdf)
-- [x] [AlexNet](https://proceedings.neurips.cc/paper_files/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf) - a from scratch guide to build your own AlexNet you can find on my blog: [maczan.pl](https://maczan.pl/p/alexnet-from-scratch-in-pytorch-lightning)
+- [x] [AlexNet](https://proceedings.neurips.cc/paper_files/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf) - a from scratch guide to build your own AlexNet for MNIST you can find on my blog: [maczan.pl](https://maczan.pl/p/alexnet-from-scratch-in-pytorch-lightning)
 - [ ] [VGG](https://arxiv.org/pdf/1409.1556.pdf) 📝 In progress 📚
 - [ ] ResNet
-- [ ] Inception
-- [ ] DenseNet
 - [ ] RNN
 - [ ] LSTM
 - [ ] GRU (Gated Recurrent Units)
+- [ ] Inception
+- [ ] DenseNet
 - [ ] Transformer
-- [ ] GPT (maybe Karpathy's resources on this topic?)
-- [ ] GAN
-- [ ] VAE (Variational autoencoder)
-- [ ] U-Net
-- [ ] Siamese Network
-- [ ] BERT
 - [ ] Self-attention
 - [ ] Sequence-to-Sequence
+- [ ] GPT (maybe Karpathy's resources on this topic?)
+- [ ] BERT
+- [ ] VAE (Variational autoencoder)
+- [ ] GAN
+- [ ] U-Net
+- [ ] Siamese Network
 - [ ] DQN
 - [ ] A3C
 - [ ] Neural ODEs (ordinary differential equations)
