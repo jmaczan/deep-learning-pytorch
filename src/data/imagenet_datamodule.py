@@ -17,6 +17,23 @@ class PadToMinimumSize:
         return transforms.functional.pad(img, padding)
 
 
+class HFImageNetDataset(Dataset):
+    def __init__(self, hf_dataset, transform=None):
+        self.hf_dataset = hf_dataset
+        self.transform = transform
+
+    def __len__(self):
+        return len(self.hf_dataset)
+
+    def __getitem__(self, idx):
+        item = self.hf_dataset[idx]
+        image = item['image']
+        label = item['label']
+        if self.transform:
+            image = self.transform(image)
+        return image, label
+
+
 class ImageNetDataModule(LightningDataModule):
     """`LightningDataModule` for the MNIST dataset.
 
@@ -119,9 +136,11 @@ class ImageNetDataModule(LightningDataModule):
 
         Do not use it to assign state (self.x = y).
         """
-        from huggingface_hub import hf_hub_download
-        hf_hub_download(repo_id="evanarlian/imagenet_1k_resized_256", repo_type="dataset", local_dir=self.hparams.data_dir)
-        
+        from datasets import load_dataset
+
+        self.dataset = load_dataset("evanarlian/imagenet_1k_resized_256")
+
+         
     def setup(self, stage: Optional[str] = None) -> None:
         """Load data. Set variables: `self.data_train`, `self.data_val`, `self.data_test`.
 
@@ -142,14 +161,9 @@ class ImageNetDataModule(LightningDataModule):
 
         # load and split datasets only if not loaded already
         if not self.data_train and not self.data_val and not self.data_test:
-            trainset = ImageNet(root=self.hparams.data_dir, split="train", transform=self.transforms)
-            testset = ImageNet(root=self.hparams.data_dir, split="val", transform=self.transforms)
-            dataset = ConcatDataset(datasets=[trainset, testset])
-            self.data_train, self.data_val, self.data_test = random_split(
-                dataset=dataset,
-                lengths=self.hparams.train_val_test_split,
-                generator=torch.Generator().manual_seed(42),
-            )
+            self.data_train = HFImageNetDataset(self.dataset['train'], transform=self.transforms)
+            self.data_val = HFImageNetDataset(self.dataset['val'], transform=self.transforms)
+            self.data_test = HFImageNetDataset(self.dataset['test'], transform=self.transforms)
 
     def train_dataloader(self) -> DataLoader[Any]:
         """Create and return the train dataloader.

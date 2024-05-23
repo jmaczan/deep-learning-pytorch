@@ -24,8 +24,6 @@ trainer:
 model:
   optimizer:
     lr: 0.002
-  net:
-    input_size: 150528 # 224*224x3
   compile: false
 
 data:

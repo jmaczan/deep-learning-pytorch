@@ -24,6 +24,7 @@
 - [ ] DenseNet
 - [ ] Transformer
 - [ ] Self-attention
+- [ ] ViT
 - [ ] Sequence-to-Sequence
 - [ ] GPT (maybe Karpathy's resources on this topic?)
 - [ ] BERT
