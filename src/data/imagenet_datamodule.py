@@ -7,6 +7,16 @@ from torchvision.datasets import ImageNet
 from torchvision.transforms import transforms
 import numpy as np
 
+class PadToMinimumSize:
+    def __init__(self, min_size):
+        self.min_size = min_size
+
+    def __call__(self, img):
+        width, height = img.size
+        padding = (0, 0, max(0, self.min_size - width), max(0, self.min_size - height))
+        return transforms.functional.pad(img, padding)
+
+
 class ImageNetDataModule(LightningDataModule):
     """`LightningDataModule` for the MNIST dataset.
 
@@ -75,9 +85,14 @@ class ImageNetDataModule(LightningDataModule):
         self.save_hyperparameters(logger=False)
 
         # data transformations
-        self.transforms = transforms.Compose(
-            [transforms.RandomCrop(size=(224, 223, 3), pad_if_needed=True)]
-        )
+        self.transforms = transforms.Compose([
+            PadToMinimumSize(256),
+            transforms.CenterCrop((256, 256)),
+            transforms.RandomCrop(size=(224, 223)),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+            # TODO: compute mean and std and use it here for normalization, instead of precomputed values above
+        ])
 
         self.data_train: Optional[Dataset] = None
         self.data_val: Optional[Dataset] = None

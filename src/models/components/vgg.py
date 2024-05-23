@@ -3,21 +3,11 @@ from torch import nn
 
 
 class VGG(nn.Module):
-    """A simple fully-connected neural net for computing predictions."""
+    """https://arxiv.org/pdf/1409.1556"""
 
     def __init__(
         self,
-        input_size: int = 224*224*3,
-        output_size: int = 1000,
     ) -> None:
-        """Initialize a `SimpleDenseNet` module.
-
-        :param input_size: The number of input features.
-        :param lin1_size: The number of output features of the first linear layer.
-        :param lin2_size: The number of output features of the second linear layer.
-        :param lin3_size: The number of output features of the third linear layer.
-        :param output_size: The number of output features of the final linear layer.
-        """
         super().__init__()
 
         self.model = nn.Sequential(

@@ -29,7 +29,7 @@ model:
   compile: false
 
 data:
-  batch_size: 64
+  batch_size: 256
 
 logger:
   wandb:
