@@ -7,7 +7,7 @@ class VGG(nn.Module):
 
     def __init__(
         self,
-        input_size: int = 224*224,
+        input_size: int = 224*224*3,
         output_size: int = 1000,
     ) -> None:
         """Initialize a `SimpleDenseNet` module.
@@ -21,54 +21,57 @@ class VGG(nn.Module):
         super().__init__()
 
         self.model = nn.Sequential(
-            nn.Conv3d(input_size, 64, stride=3),
+            nn.Conv2d(in_channels=3, out_channels=64, kernel_size=3, stride=1, padding=1),
             nn.ReLU(),
-            nn.Conv3d(64, 64, stride=3),
+            nn.Conv2d(in_channels=64, out_channels=64, kernel_size=3, stride=1, padding=1),
             nn.ReLU(),
 
-            nn.MaxPool3d(kernel_size=2),
+            nn.MaxPool2d(kernel_size=(2, 2), stride=2), # max pooling doesn't change number of channels, but the size of spatial dimensions
+            # output dimension (for instance, height): (height - kernel_size + 2*padding)/stride + 1
+            # so dimensions now are 112x112
+            nn.Conv2d(in_channels=64, out_channels=128, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.Conv2d(in_channels=128, out_channels=128, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
             
-            nn.Conv3d(32, 128, stride=3),
+            nn.MaxPool2d(kernel_size=(2, 2), stride=2), # dimensions halved again - 56x56 now
+
+            nn.Conv2d(in_channels=128, out_channels=256, kernel_size=3, stride=1, padding=1),
             nn.ReLU(),
-            nn.Conv3d(128, 128, stride=3),
+            nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, stride=1, padding=1),
             nn.ReLU(),
+            nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+
+            nn.MaxPool2d(kernel_size=(2, 2), stride=2), # dimensions halved - 28x28
+
+            nn.Conv2d(in_channels=128, out_channels=512, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.Conv2d(in_channels=512, out_channels=512, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.Conv2d(in_channels=512, out_channels=512, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.Conv2d(in_channels=512, out_channels=512, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+
+            nn.MaxPool2d(kernel_size=(2, 2), stride=2), # dimensions halved - 14x14
+
+            nn.Conv2d(in_channels=256, out_channels=512, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.Conv2d(in_channels=512, out_channels=512, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.Conv2d(in_channels=512, out_channels=512, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.Conv2d(in_channels=512, out_channels=512, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+
+            nn.MaxPool2d(kernel_size=(2, 2), stride=2), # final dimensions - 7x7
             
-            nn.MaxPool3d(kernel_size=2),
-
-            nn.Conv3d(64, 256, stride=3),
-            nn.ReLU(),
-            nn.Conv3d(256, 256, stride=3),
-            nn.ReLU(),
-            nn.Conv3d(256, 256, stride=3),
-            nn.ReLU(),
-            nn.Conv3d(256, 256, stride=3),
-            nn.ReLU(),
-
-            nn.MaxPool3d(kernel_size=2),
-
-            nn.Conv3d(128, 512, stride=3),
-            nn.ReLU(),
-            nn.Conv3d(512, 512, stride=3),
-            nn.ReLU(),
-            nn.Conv3d(512, 512, stride=3),
-            nn.ReLU(),
-            nn.Conv3d(512, 512, stride=3),
-            nn.ReLU(),
-
-            nn.MaxPool3d(kernel_size=2),
-
-            nn.Conv3d(256, 512, stride=3),
-            nn.ReLU(),
-            nn.Conv3d(512, 512, stride=3),
-            nn.ReLU(),
-            nn.Conv3d(512, 512, stride=3),
-            nn.ReLU(),
-            nn.Conv3d(512, 512, stride=3),
-            nn.ReLU(),
-
-            nn.MaxPool3d(kernel_size=2),
-            nn.Flatten(), # likely it's neded    
-            nn.Linear(in_features=512, out_features=4096), #in_features likely wrong
+            nn.Flatten(),
+            
+            nn.Linear(in_features=512*7*7, out_features=4096), #in_features use computed value of dimensions after 5 max poolings
             nn.Dropout(p=0.5),
             nn.ReLU(), 
 
@@ -77,10 +80,9 @@ class VGG(nn.Module):
             nn.ReLU(), 
 
             nn.Linear(in_features=4096, out_features=1000), 
-            nn.ReLU(), 
             nn.LogSoftmax(dim=1),
 
-            # missing dropouts and other regularizations
+            # missing other regularizations, ReLUs might be incorrectly placed
         )
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:

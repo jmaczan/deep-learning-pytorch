@@ -1,11 +1,11 @@
 from typing import Any, Dict, Optional, Tuple
-
+import os
 import torch
 from lightning import LightningDataModule
 from torch.utils.data import ConcatDataset, DataLoader, Dataset, random_split
 from torchvision.datasets import ImageNet
 from torchvision.transforms import transforms
-
+import numpy as np
 
 class ImageNetDataModule(LightningDataModule):
     """`LightningDataModule` for the MNIST dataset.
@@ -55,7 +55,7 @@ class ImageNetDataModule(LightningDataModule):
     def __init__(
         self,
         data_dir: str = "data/",
-        train_val_test_split: Tuple[int, int, int] = (55_000, 5_000, 10_000),
+        train_val_test_split: Tuple[int, int, int] = (1_281_167, 50_000, 100_000),
         batch_size: int = 64,
         num_workers: int = 0,
         pin_memory: bool = False,
@@ -76,7 +76,7 @@ class ImageNetDataModule(LightningDataModule):
 
         # data transformations
         self.transforms = transforms.Compose(
-            [transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))]
+            [transforms.RandomCrop(size=(224, 223, 3), pad_if_needed=True)]
         )
 
         self.data_train: Optional[Dataset] = None
@@ -85,13 +85,16 @@ class ImageNetDataModule(LightningDataModule):
 
         self.batch_size_per_device = batch_size
 
+        self.mean = None
+        self.std = None
+
     @property
     def num_classes(self) -> int:
         """Get the number of classes.
 
-        :return: The number of MNIST classes (10).
+        :return: The number of ImageNet classes (1000).
         """
-        return 10
+        return 1000
 
     def prepare_data(self) -> None:
         """Download data if needed. Lightning ensures that `self.prepare_data()` is called only
@@ -101,9 +104,9 @@ class ImageNetDataModule(LightningDataModule):
 
         Do not use it to assign state (self.x = y).
         """
-        ImageNet(root=self.hparams.data_dir, split="train")
-        ImageNet(root=self.hparams.data_dir, split="val")
-
+        from huggingface_hub import hf_hub_download
+        hf_hub_download(repo_id="evanarlian/imagenet_1k_resized_256", repo_type="dataset", local_dir=self.hparams.data_dir)
+        
     def setup(self, stage: Optional[str] = None) -> None:
         """Load data. Set variables: `self.data_train`, `self.data_val`, `self.data_test`.
 
@@ -124,8 +127,8 @@ class ImageNetDataModule(LightningDataModule):
 
         # load and split datasets only if not loaded already
         if not self.data_train and not self.data_val and not self.data_test:
-            trainset = MNIST(self.hparams.data_dir, train=True, transform=self.transforms)
-            testset = MNIST(self.hparams.data_dir, train=False, transform=self.transforms)
+            trainset = ImageNet(root=self.hparams.data_dir, split="train", transform=self.transforms)
+            testset = ImageNet(root=self.hparams.data_dir, split="val", transform=self.transforms)
             dataset = ConcatDataset(datasets=[trainset, testset])
             self.data_train, self.data_val, self.data_test = random_split(
                 dataset=dataset,
