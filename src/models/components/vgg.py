@@ -37,7 +37,7 @@ class VGG(nn.Module):
 
             nn.MaxPool2d(kernel_size=(2, 2), stride=2), # dimensions halved - 28x28
 
-            nn.Conv2d(in_channels=128, out_channels=512, kernel_size=3, stride=1, padding=1),
+            nn.Conv2d(in_channels=256, out_channels=512, kernel_size=3, stride=1, padding=1),
             nn.ReLU(),
             nn.Conv2d(in_channels=512, out_channels=512, kernel_size=3, stride=1, padding=1),
             nn.ReLU(),
@@ -48,7 +48,7 @@ class VGG(nn.Module):
 
             nn.MaxPool2d(kernel_size=(2, 2), stride=2), # dimensions halved - 14x14
 
-            nn.Conv2d(in_channels=256, out_channels=512, kernel_size=3, stride=1, padding=1),
+            nn.Conv2d(in_channels=512, out_channels=512, kernel_size=3, stride=1, padding=1),
             nn.ReLU(),
             nn.Conv2d(in_channels=512, out_channels=512, kernel_size=3, stride=1, padding=1),
             nn.ReLU(),
@@ -76,18 +76,8 @@ class VGG(nn.Module):
         )
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        """Perform a single forward pass through the network.
-
-        :param x: The input tensor.
-        :return: A tensor of predictions.
-        """
-        batch_size, channels, width, height = x.size()
-
-        # (batch, 1, width, height) -> (batch, 1*width*height)
-        x = x.view(batch_size, -1)
-
         return self.model(x)
 
 
 if __name__ == "__main__":
-    _ = SimpleDenseNet()
+    _ = VGG()

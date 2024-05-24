@@ -64,9 +64,9 @@ class ImageNetLitModule(LightningModule):
         self.criterion = torch.nn.CrossEntropyLoss()
 
         # metric objects for calculating and averaging accuracy across batches
-        self.train_acc = Accuracy(task="multiclass", num_classes=10)
-        self.val_acc = Accuracy(task="multiclass", num_classes=10)
-        self.test_acc = Accuracy(task="multiclass", num_classes=10)
+        self.train_acc = Accuracy(task="multiclass", num_classes=1000)
+        self.val_acc = Accuracy(task="multiclass", num_classes=1000)
+        self.test_acc = Accuracy(task="multiclass", num_classes=1000)
 
         # for averaging loss across batches
         self.train_loss = MeanMetric()
