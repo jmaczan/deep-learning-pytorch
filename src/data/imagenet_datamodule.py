@@ -4,7 +4,7 @@ import torch
 from lightning import LightningDataModule
 from torch.utils.data import ConcatDataset, DataLoader, Dataset, random_split
 from torchvision.datasets import ImageNet
-from torchvision.transforms import transforms
+from torchvision.transforms import transforms, functional
 import numpy as np
 
 class PadToMinimumSize:
@@ -14,7 +14,7 @@ class PadToMinimumSize:
     def __call__(self, img):
         width, height = img.size
         padding = (0, 0, max(0, self.min_size - width), max(0, self.min_size - height))
-        return transforms.functional.pad(img, padding)
+        return functional.pad(img, padding)
 
 
 class HFImageNetDataset(Dataset):
