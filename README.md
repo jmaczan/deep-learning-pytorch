@@ -14,9 +14,9 @@
 [A collection of deep learning models implemented in PyTorch and PyTorch Lightning for educational purposes](src/models/components)
 
 - [x] [LeNet](http://vision.stanford.edu/cs598_spring07/papers/Lecun98.pdf)
-- [x] [AlexNet](https://proceedings.neurips.cc/paper_files/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf) - a from scratch guide to build your own AlexNet for MNIST you can find on my blog: [maczan.pl](https://maczan.pl/p/alexnet-from-scratch-in-pytorch-lightning)
-- [ ] [VGG](https://arxiv.org/pdf/1409.1556.pdf) 📝 In progress 📚
-- [ ] ResNet
+- [x] [AlexNet](https://proceedings.neurips.cc/paper_files/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf) - [maczan.pl blog post](https://maczan.pl/p/alexnet-from-scratch-in-pytorch-lightning)
+- [x] [VGG](https://arxiv.org/pdf/1409.1556.pdf) for ImageNet
+- [ ] ResNet  📝 In progress 📚
 - [ ] RNN
 - [ ] LSTM
 - [ ] GRU (Gated Recurrent Units)
