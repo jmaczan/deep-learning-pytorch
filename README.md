@@ -23,10 +23,9 @@
 - [ ] Inception
 - [ ] DenseNet
 - [ ] Transformer
-- [ ] Self-attention
 - [ ] ViT
 - [ ] Sequence-to-Sequence
-- [ ] GPT (maybe Karpathy's resources on this topic?)
+- [x] [GPT] - [separate repo](https://github.com/jmaczan/gpt)
 - [ ] BERT
 - [ ] VAE (Variational autoencoder)
 - [ ] GAN
