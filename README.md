@@ -25,7 +25,7 @@
 - [ ] Transformer
 - [ ] ViT
 - [ ] Sequence-to-Sequence
-- [x] [GPT] - [separate repo](https://github.com/jmaczan/gpt)
+- [x] GPT - [separate repo](https://github.com/jmaczan/gpt)
 - [ ] BERT
 - [ ] VAE (Variational autoencoder)
 - [ ] GAN
